@@ -486,11 +486,11 @@ The Data Integration Toolkit incorporates and re-engineers published methodologi
   isbn={978-0123819727}
 }
 
-@article{ebeid2020information,
-  title={Information Quality and Entity Resolution in Healthcare Information Exchange Systems},
-  author={Ebeid, Islam Akef and Talburt, John R.},
-  journal={Journal of Information Quality},
-  year={2020}
+@article{talburt2022moder,
+  title={ModER: graph-based unsupervised entity resolution using composite modularity optimization and locality sensitive hashing},
+  author={Talburt, John},
+  journal={International Journal of Advanced Computer Science and Applications},
+  year={2022}
 }
 
 @inproceedings{talburt2008data,
