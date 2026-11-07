@@ -1,7 +1,7 @@
 # Data Integration Toolkit (DITK)
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Dual AGPLv3 / Commercial](https://img.shields.io/badge/License-Dual%20AGPLv3%20%2F%20Commercial-blue.svg)](https://iebeid.github.io/pages/business/storefront.html)
 [![Architecture: Medallion](https://img.shields.io/badge/Architecture-Medallion%20Lakehouse-success.svg)](#medallion-storage-architecture)
 [![Test Suite: 37/37 Passing](https://img.shields.io/badge/Tests-37%2F37%20Passing-brightgreen.svg)](#running-tests--validation)
 
@@ -29,6 +29,8 @@ A unified, high-performance Lakehouse Engine for **Scalable Entity Resolution (E
   - [Interactive Lakehouse CLI](#interactive-lakehouse-cli)
   - [Interactive AI Profiling Usecases](#interactive-ai-profiling-usecases)
 - [Running Tests & Validation](#running-tests--validation)
+- [Academic Foundations & Citations](#academic-foundations--citations)
+- [Dual-Licensing & Commercial Availability](#dual-licensing--commercial-availability)
 
 ---
 
@@ -471,6 +473,58 @@ tests/test_uniref_ngram.py ..                                             [100%]
 
 ---
 
-## License
+## Academic Foundations & Citations
 
-This project is licensed under the MIT License.
+The Data Integration Toolkit incorporates and re-engineers published methodologies in entity resolution, data quality, and graph algorithms. When utilizing this toolkit for academic publications, please cite the foundational literature:
+
+```bibtex
+@book{talburt2011entity,
+  title={Entity Resolution and Information Quality},
+  author={Talburt, John R.},
+  year={2011},
+  publisher={Morgan Kaufmann},
+  isbn={978-0123819727}
+}
+
+@article{ebeid2020information,
+  title={Information Quality and Entity Resolution in Healthcare Information Exchange Systems},
+  author={Ebeid, Islam Akef and Talburt, John R.},
+  journal={Journal of Information Quality},
+  year={2020}
+}
+
+@inproceedings{talburt2008data,
+  title={The Data Washing Machine: An Automatic Data Cleaning Engine},
+  author={Talburt, John R. and Wang, Richard Y.},
+  booktitle={Proceedings of the International Conference on Information Quality (ICIQ)},
+  year={2008}
+}
+
+@article{christen2013geco,
+  title={GeCo: an online generator for realistic synthetic demographic data},
+  author={Tran, Khoi-Nguyen and Vatsalan, Dinusha and Christen, Peter},
+  journal={Digital Health},
+  year={2013}
+}
+```
+
+---
+
+## Dual-Licensing & Commercial Availability
+
+This software is commercialized and dual-licensed by **Unity Systems (الوحدة للأنظمة)**:
+
+### 1. Open Source & Academic Research ($0 / forever)
+Licensed under the **[GNU Affero General Public License v3.0 (AGPLv3)](./LICENSE)**.
+* Ideal for academic researchers, students, hobbyists, and non-commercial community projects.
+* **Network Copyleft Obligation**: If you modify or host this software over a network (e.g., as a cloud service or SaaS), you **must** release your complete downstream application source code under AGPLv3.
+
+### 2. Proprietary Commercial License & Enterprise MSAs
+For enterprises, startups, and SaaS platforms that wish to incorporate DITK without disclosing proprietary application logic or triggering AGPLv3 copyleft terms:
+* **Closed-Source Embedding**: Embed freely inside proprietary, commercial SaaS and on-premise products.
+* **Removes Open-Source Disclosure**: Completely exempts your codebase from AGPLv3 source code release requirements.
+* **Enterprise Delivery**: Access to private PyPI releases, pre-compiled binaries, priority SLAs, and customized Master Services Agreements (MSAs).
+
+To acquire commercial developer seats, compute node licenses, or execute a custom enterprise MSA:
+* **Storefront & Catalog**: [Unity Systems Commercial Catalog](https://iebeid.github.io/pages/business/storefront.html)
+* **Corporate Licensing Contact**: Dr. Islam Akef Ebeid `<iaebeid@gmail.com>`
