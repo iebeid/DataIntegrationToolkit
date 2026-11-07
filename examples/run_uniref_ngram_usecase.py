@@ -28,9 +28,9 @@ from typing import Any, Dict, List, Optional, Tuple
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.insert(0, REPO_ROOT)
 
-from toolkit.context import LakehouseContext
-from toolkit.ai.scanner import DatasetScanner, DatasetScanResult
-from toolkit.catalog.table import TableMetadata
+from src.context import LakehouseContext
+from src.ai.scanner import DatasetScanner, DatasetScanResult
+from src.catalog.table import TableMetadata
 
 
 def resolve_path(p: str) -> str:

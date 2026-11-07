@@ -7,7 +7,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from toolkit.context import IngestionContext
+from src.context import IngestionContext
 
 
 def test_track6_scalability_and_ecosystem():
@@ -103,7 +103,7 @@ def test_track6_scalability_and_ecosystem():
     assert computed_rows == 6, f"Expected 6 rows computed via Dask, got {computed_rows}"
 
     # Test Dask N-Gram Helpers
-    from toolkit.operators.dask_engine import DaskProtgramHelpers
+    from src.operators.dask_engine import DaskProtgramHelpers
     sample_seq_df = pd.DataFrame({
         "id": ["p1", "p2"],
         "seq": ["ACDEFGH", "ACDYYZZ"],

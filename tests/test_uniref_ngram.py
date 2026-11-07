@@ -4,7 +4,7 @@ import shutil
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from toolkit.context import LakehouseContext
+from src.context import LakehouseContext
 
 
 def test_uniref_ngram_graph_pipeline():

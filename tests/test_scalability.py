@@ -3,8 +3,8 @@ import shutil
 import tempfile
 import pytest
 import pandas as pd
-from toolkit.context import IngestionContext
-from toolkit.operators.dask_engine import DaskProtgramHelpers
+from src.context import IngestionContext
+from src.operators.dask_engine import DaskProtgramHelpers
 
 
 @pytest.fixture

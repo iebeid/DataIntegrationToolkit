@@ -6,28 +6,28 @@ import numpy as np
 import pyarrow as pa
 import networkx as nx
 
-from toolkit.context import LakehouseContext
-from toolkit.operators.silver import (
+from src.context import LakehouseContext
+from src.operators.silver import (
     normal_led,
     BlockCleanerOperator,
     CharacterMapsOperator,
     RecordFeatureComparatorOperator,
     ClusterEntropyCalculator,
 )
-from toolkit.operators.gold import (
+from src.operators.gold import (
     GraphOGAlgorithms,
     CliqueRankOperator,
     HITSOperator,
     BipartiteGraphConstructor,
 )
-from toolkit.operators.gnn import (
+from src.operators.gnn import (
     Word2VecOperator,
     Doc2VecOperator,
     FastTextOperator,
     LSTMDataBuilder,
     XGCNDataBuilder,
 )
-from toolkit.operators.eval import (
+from src.operators.eval import (
     ErrorLookupProfiler,
     BenchmarkDatasetLoader,
     ConfigER,
@@ -61,7 +61,7 @@ class TestRefactoredSrcCoverage(unittest.TestCase):
             schema=schema,
         )
         self.ctx.storage.write_parquet(tbl, f"{self.temp_dir}/silver/staged.parquet")
-        from toolkit.catalog.table import TableMetadata
+        from src.catalog.table import TableMetadata
         self.ctx.catalog.register_table(
             TableMetadata(name="staged", tier="silver", uri=f"{self.temp_dir}/silver/staged.parquet", schema=schema, row_count=3)
         )
@@ -86,7 +86,7 @@ class TestRefactoredSrcCoverage(unittest.TestCase):
             schema=schema,
         )
         self.ctx.storage.write_parquet(tbl, f"{self.temp_dir}/silver/recs.parquet")
-        from toolkit.catalog.table import TableMetadata
+        from src.catalog.table import TableMetadata
         self.ctx.catalog.register_table(
             TableMetadata(name="recs", tier="silver", uri=f"{self.temp_dir}/silver/recs.parquet", schema=schema, row_count=2)
         )
@@ -152,7 +152,7 @@ class TestRefactoredSrcCoverage(unittest.TestCase):
             schema=schema,
         )
         self.ctx.storage.write_parquet(tbl, f"{self.temp_dir}/silver/pairs.parquet")
-        from toolkit.catalog.table import TableMetadata
+        from src.catalog.table import TableMetadata
         self.ctx.catalog.register_table(
             TableMetadata(name="pairs", tier="silver", uri=f"{self.temp_dir}/silver/pairs.parquet", schema=schema, row_count=3)
         )
@@ -187,7 +187,7 @@ class TestRefactoredSrcCoverage(unittest.TestCase):
             schema=schema,
         )
         self.ctx.storage.write_parquet(tbl, f"{self.temp_dir}/silver/tokens.parquet")
-        from toolkit.catalog.table import TableMetadata
+        from src.catalog.table import TableMetadata
         self.ctx.catalog.register_table(
             TableMetadata(name="tokens", tier="silver", uri=f"{self.temp_dir}/silver/tokens.parquet", schema=schema, row_count=4)
         )
@@ -247,7 +247,7 @@ class TestRefactoredSrcCoverage(unittest.TestCase):
             schema=schema,
         )
         self.ctx.storage.write_parquet(resolved_tbl, f"{self.temp_dir}/gold/resolved.parquet")
-        from toolkit.catalog.table import TableMetadata
+        from src.catalog.table import TableMetadata
         self.ctx.catalog.register_table(
             TableMetadata(name="resolved", tier="gold", uri=f"{self.temp_dir}/gold/resolved.parquet", schema=schema, row_count=2)
         )

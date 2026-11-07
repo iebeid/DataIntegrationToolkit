@@ -2,8 +2,8 @@ import os
 import shutil
 import tempfile
 import pytest
-from toolkit.context import IngestionContext
-from toolkit.operators.eval import (
+from src.context import IngestionContext
+from src.operators.eval import (
     EvaluateResolutionOperator,
     DataQualityProfilerOperator,
     _compute_adjusted_rand_index,

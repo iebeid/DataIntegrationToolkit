@@ -22,8 +22,8 @@ sys.path.insert(0, REPO_ROOT)
 
 import xml.etree.ElementTree as ET
 import pyarrow as pa
-from toolkit.context import LakehouseContext, IngestionContext
-from toolkit.catalog.table import TableMetadata
+from src.context import LakehouseContext, IngestionContext
+from src.catalog.table import TableMetadata
 
 
 def resolve_path(p: str) -> str:

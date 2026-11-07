@@ -5,16 +5,17 @@ import pytest
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from toolkit.context import IngestionContext
+from src.context import IngestionContext
 
 
 def setup_test_environment(base_dir=None):
     if base_dir is None:
         base_dir = os.path.join(os.path.dirname(__file__), "test_lakehouse_track3")
-    if os.path.exists(base_dir):
-        shutil.rmtree(base_dir)
+    lakehouse_dir = f"{base_dir}/lakehouse"
+    if os.path.exists(lakehouse_dir):
+        shutil.rmtree(lakehouse_dir, ignore_errors=True)
     os.makedirs(f"{base_dir}/data", exist_ok=True)
-    ctx = IngestionContext(lakehouse_root=f"{base_dir}/lakehouse")
+    ctx = IngestionContext(lakehouse_root=lakehouse_dir)
     return ctx, base_dir
 
 
@@ -186,24 +187,27 @@ MAALTRDPQFQKLQQWYREHRSELNLRRLFDANKDRFNHFSLTLNTNHGHILVDYSKNLV
 
     # Real dataset test on data/bioinformatics if present
     real_sim_path = "data/bioinformatics/protein_sequence_similarity.txt"
-    if os.path.exists(real_sim_path):
-        print("\n[Step 5.1] Testing real protein sequence similarity dataset ingestion...")
-        # Create a sample slice for rapid verification
-        sample_slice_path = f"{data_dir}/protein_sim_slice.txt"
-        with open(real_sim_path, "r", encoding="utf-8") as rf, open(sample_slice_path, "w", encoding="utf-8") as wf:
-            for _ in range(1000):
-                line = rf.readline()
-                if not line:
-                    break
-                wf.write(line)
+    try:
+        if os.path.exists(real_sim_path):
+            print("\n[Step 5.1] Testing real protein sequence similarity dataset ingestion...")
+            # Create a sample slice for rapid verification
+            sample_slice_path = f"{data_dir}/protein_sim_slice.txt"
+            with open(real_sim_path, "r", encoding="utf-8") as rf, open(sample_slice_path, "w", encoding="utf-8") as wf:
+                for _ in range(1000):
+                    line = rf.readline()
+                    if not line:
+                        break
+                    wf.write(line)
 
-        ctx.sql(f"INGEST FROM '{sample_slice_path}' INTO bronze.protein_sim WITH (delimiter = '\\t', has_header = false);")
-        coarse_real = ctx.sql("COARSEN GRAPH silver.coarse_protein_sim FROM bronze.protein_sim WITH (src_col = 'f0', dst_col = 'f1', levels = 1, method = 'graclus');")
-        print(f"  Real protein similarity graph coarsening: {coarse_real.properties['orig_nodes']} nodes -> {coarse_real.properties['coarsened_nodes']} nodes (Reduction: {coarse_real.properties['node_reduction_ratio']:.2%})")
+            ctx.sql(f"INGEST FROM '{sample_slice_path}' INTO bronze.protein_sim WITH (delimiter = '\\t', has_header = false);")
+            coarse_real = ctx.sql("COARSEN GRAPH silver.coarse_protein_sim FROM bronze.protein_sim WITH (src_col = 'f0', dst_col = 'f1', levels = 1, method = 'graclus');")
+            print(f"  Real protein similarity graph coarsening: {coarse_real.properties['orig_nodes']} nodes -> {coarse_real.properties['coarsened_nodes']} nodes (Reduction: {coarse_real.properties['node_reduction_ratio']:.2%})")
 
-    print("\n" + "=" * 80)
-    print("ALL TRACK 3 TESTS PASSED SUCCESSFULLY!")
-    print("=" * 80)
+        print("\n" + "=" * 80)
+        print("ALL TRACK 3 TESTS PASSED SUCCESSFULLY!")
+        print("=" * 80)
+    finally:
+        shutil.rmtree(f"{base_dir}/lakehouse", ignore_errors=True)
 
 
 if __name__ == "__main__":

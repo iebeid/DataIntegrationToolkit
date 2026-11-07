@@ -16,7 +16,7 @@ import pyarrow as pa
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from toolkit.context import IngestionContext
+from src.context import IngestionContext
 
 
 def test_track2_end_to_end():

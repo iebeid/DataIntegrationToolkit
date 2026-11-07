@@ -2,10 +2,40 @@ import os
 import shutil
 import tempfile
 import pytest
-from toolkit.context import IngestionContext
-from toolkit.ai.scanner import DatasetScanner
-from toolkit.ai.gemini_client import GeminiClient
-from toolkit.ai.router import AIIngestionRouter
+from src.context import IngestionContext
+from src.ai.scanner import DatasetScanner
+from src.ai.gemini_client import GeminiClient
+from src.ai.router import AIIngestionRouter
+
+
+@pytest.fixture(autouse=True)
+def ensure_sample_data():
+    data_dir = os.path.join(os.path.dirname(__file__), "test_lakehouse_track3/data")
+    os.makedirs(data_dir, exist_ok=True)
+    fasta_p = os.path.join(data_dir, "sample_proteins.fasta")
+    if not os.path.exists(fasta_p) or os.path.getsize(fasta_p) < 400:
+        with open(fasta_p, "w", encoding="utf-8") as f:
+            f.write(""">sp|P04637|P53_HUMAN Cellular tumor antigen p53 OS=Homo sapiens OX=9606 GN=TP53 PE=1 SV=4
+MEEPQSDPSVEPPLSQETFSDLWKLLPENNVLSPLPSQAMDDLMLSPDDIEQWFTEDPGP
+DEAPRMPEAAPPVAPAPAAPTPAAPAPAPSWPLSSSVPSQKTYQGSYGFRLGFLHSGTAK
+SVTCTYSPALNKMFCQLAKTCPVQLWVDSTPPPGTRVRAMAIYKQSQHMTEVVRRCPHHE
+>sp|P01116|RASH_HUMAN GTPase HRas OS=Homo sapiens OX=9606 GN=HRAS PE=1 SV=1
+MTEYKLVVVGAGGVGKSALTIQLIQNHFVDEYDPTIEDSYRKQVVIDGETCLLDILDTAG
+QEEYSAMRDQYMRTGEGFLCVFAINNTKSFEDIHQYREQIKRVKDSDDVPMVLVGNKCDL
+>tr|A0A024R1R8|A0A024R1R8_HUMAN Protein kinase C alpha OS=Homo sapiens
+MADVYPANDSTASQDVANRFARKGALRQKNVHEVKDHKFIARFFKQPTFCSHCTDFIWGF
+GKQGFQCQVCCFVVHKRCHEFVTFSCPGADKGPDTDDPRSKHKFKIHTYGSPTFCDHCGS
+>UniRef50_P12345 Glucose-6-phosphate isomerase OS=Homo sapiens
+MAALTRDPQFQKLQQWYREHRSELNLRRLFDANKDRFNHFSLTLNTNHGHILVDYSKNLV
+""")
+    idmap_p = os.path.join(data_dir, "sample_idmapping.tsv")
+    if not os.path.exists(idmap_p):
+        with open(idmap_p, "w", encoding="utf-8") as f:
+            f.write("P04637\tGene_Name\tTP53\nP04637\tBioGRID\t112233\nP01116\tGene_Name\tHRAS\n")
+    biogrid_p = os.path.join(data_dir, "sample_biogrid.tab3.txt")
+    if not os.path.exists(biogrid_p):
+        with open(biogrid_p, "w", encoding="utf-8") as f:
+            f.write("#BioGRID\tID Interactor A\tID Interactor B\tScore\n1\t112233\t102030\t0.95\n")
 
 
 @pytest.fixture

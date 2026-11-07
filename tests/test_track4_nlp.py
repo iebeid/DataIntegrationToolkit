@@ -6,8 +6,8 @@ import pyarrow as pa
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from toolkit.context import IngestionContext
-from toolkit.catalog.table import TableMetadata
+from src.context import IngestionContext
+from src.catalog.table import TableMetadata
 
 
 def setup_test_data(ctx: IngestionContext):
@@ -50,7 +50,7 @@ def setup_test_data(ctx: IngestionContext):
     )
     art_path = os.path.join(ctx.lakehouse_root, "silver", "pubmed_articles.parquet").replace("\\", "/")
     ctx.storage.write_tabular(tbl_art, art_path, file_format="parquet")
-    from toolkit.catalog.table import TableMetadata
+    from src.catalog.table import TableMetadata
     ctx.catalog.register_table(TableMetadata(name="pubmed_articles", tier="silver", uri=art_path, schema=schema_art, row_count=len(tbl_art)))
 
     # 2. Authors table
