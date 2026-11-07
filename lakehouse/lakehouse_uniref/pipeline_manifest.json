@@ -1,0 +1,95 @@
+{
+  "timestamp": "2026-11-07T07:22:21Z",
+  "input_dataset": "G:\\My Drive\\Workspace\\Research\\Code\\Internal\\DATA-ENGINEERING\\DataIntegrationToolkit\\data\\bioinformatics\\uniref50.fasta",
+  "output_directory": "G:\\My Drive\\Workspace\\Research\\Code\\Internal\\DATA-ENGINEERING\\DataIntegrationToolkit\\lakehouse_uniref",
+  "ai_profile": {
+    "dataset_path": "G:\\My Drive\\Workspace\\Research\\Code\\Internal\\DATA-ENGINEERING\\DataIntegrationToolkit\\data\\bioinformatics\\uniref50.fasta",
+    "filename": "uniref50.fasta",
+    "file_size_mb": 27171.59,
+    "domain": "bioinformatics",
+    "file_format": "fasta",
+    "confidence": 0.98,
+    "ai_provider": "heuristic-fallback (set GEMINI_API_KEY to activate cloud LLM)",
+    "reasoning": "Detected UniRef protein cluster FASTA with sequence records, cluster IDs, and taxonomic tags in 'uniref50.fasta'.",
+    "estimated_records": 467073460,
+    "is_uniref_clusters": true,
+    "detected_headers_count_sample": 1,
+    "sample_total_chars": 3540,
+    "has_non_standard_chars": false,
+    "non_standard_chars": [],
+    "has_taxonomic_labels": true,
+    "has_cluster_metadata": true,
+    "structural_markers": [
+      "FASTA_HEADER",
+      "PROTEIN_OR_NUCLEOTIDE_SEQUENCE",
+      "UNIREF_CLUSTER_FASTA",
+      "TAXONOMIC_LABELS_PRESENT",
+      "UNIREF_CLUSTER_METADATA_PRESENT"
+    ],
+    "scan_duration_sec": 0.011
+  },
+  "pipeline_config": {
+    "clean_sequences": true,
+    "remove_non_standard": true,
+    "run_deduplication": true,
+    "tokenizer": "ngram_graph",
+    "n": 3,
+    "compute_probabilities": true,
+    "compute_tfidf": false,
+    "compute_bow": false,
+    "ml_label_mode": "taxonomy",
+    "export_sparse": true,
+    "export_directgcn": true,
+    "export_dense": false,
+    "coarsen": true,
+    "coarsen_levels": 1,
+    "limit": 100,
+    "sample": null
+  },
+  "stages": {
+    "bronze_ingestion": {
+      "table": "bronze.uniref_sequences",
+      "rows": 100,
+      "duration_sec": 0.16,
+      "uri": "G:/My Drive/Workspace/Research/Code/Internal/DATA-ENGINEERING/DataIntegrationToolkit/lakehouse_uniref/bronze/uniref_sequences.parquet"
+    },
+    "entity_resolution": {
+      "table": "silver.uniref_deduplicated_sequences",
+      "original_rows": 100,
+      "deduplicated_rows": 100,
+      "duplicates_removed": 0,
+      "duration_sec": 0.08,
+      "uri": "G:/My Drive/Workspace/Research/Code/Internal/DATA-ENGINEERING/DataIntegrationToolkit/lakehouse_uniref/silver/uniref_deduplicated_sequences.parquet"
+    },
+    "graph_construction": {
+      "table": "gold.uniref_ngram_graph",
+      "nodes_table": "silver.uniref_ngram_nodes",
+      "num_nodes": 7991,
+      "num_edges": 136595,
+      "density": 0.002139,
+      "matrices_directory": "G:\\My Drive\\Workspace\\Research\\Code\\Internal\\DATA-ENGINEERING\\DataIntegrationToolkit\\lakehouse_uniref\\matrices",
+      "exported_matrix_files": [
+        "adj_raw_sparse_n3.npz",
+        "adj_mathcal_A_in_n3.npz",
+        "adj_mathcal_A_out_n3.npz",
+        "node_vocabulary_n3.json"
+      ],
+      "duration_sec": 2.9,
+      "uri": "G:/My Drive/Workspace/Research/Code/Internal/DATA-ENGINEERING/DataIntegrationToolkit/lakehouse_uniref/gold/uniref_ngram_graph.parquet"
+    },
+    "graph_coarsening": {
+      "table": "gold.uniref_coarse_graph",
+      "cluster_map_table": "silver.uniref_cluster_map",
+      "levels": 1,
+      "original_nodes": 7991,
+      "coarsened_nodes": 4123,
+      "node_reduction_ratio": 0.484,
+      "original_edges": 136595,
+      "coarsened_edges": 117478,
+      "edge_reduction_ratio": 0.14,
+      "duration_sec": 0.41,
+      "uri": "G:/My Drive/Workspace/Research/Code/Internal/DATA-ENGINEERING/DataIntegrationToolkit/lakehouse_uniref/gold/uniref_coarse_graph.parquet"
+    }
+  },
+  "total_duration_sec": 3.62
+}
